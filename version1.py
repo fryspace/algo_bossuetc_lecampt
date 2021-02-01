@@ -2,15 +2,10 @@
 Première version de la résolution du problème d'algo, les entrées du programme sont
 s la disctance minimale entre deux voisins et la liste des points et leurs coordonnées
 """
-from timeit import timeit
+#from timeit import timeit
 from sys import argv
 
 from geo.point import Point
-
-
-def construction_graphe()
-
-
 
 
 def load_instance(filename):
@@ -25,7 +20,23 @@ def load_instance(filename):
 
     return distance, points
 
+def construction_graphe(distance, points):
+    """
+    Fonction permettant de constuire un graphe à partir des données du problèmes.
+    Ce graphe se construit en considérant voisin un point seulement ses voisins
+    d'indices plus grand que lui-même.
+    """
+    liste_voisins=[]
+    taille=len(points)
+    for i in range(taille):
+        voisins=[]
+        for j in range(i+1,taille):
+            if Point.distance_to(points[i], points[j]) < distance:
+                voisins.append(j)
+        liste_voisins.append(voisins)
 
+def construction_tableau_classe(graphe):
+    
 
 
 

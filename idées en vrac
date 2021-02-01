@@ -1,0 +1,121 @@
+idées en vrac:
+
+utiliser l'algorithme de trajan: 
+
+On part du nuage de point, on fait un graphe progressif à partir du début du tableau -> on fait une liste de liste des tableaux suivants 
+qui permet d'aller plus vite. ensuite, on peut appliquer la méthode de trajan version non orienté de manière à isolé dans un tableau 
+On peut ensuite créer une nouvelle liste (ou supprimer dans l'ancienne) afin d'isoler le nombre de points identiques.
+
+
+On va raisonner en matrice de voisinage ordonnée:
+Pour chaque sommet, on ajoute un autre sommet à ses voisins si et seulement si son poids est plus fort que lui
+
+en pseudo code:
+
+|proc construction de graphe 
+|entrée: points , s
+|traitement:
+|T<- tableau de liste vide 
+|Pour i allant de 1 à nombre de points:
+|	|Pour j allant de i+1 à nombre de points:
+|	|	|si distance entre les deux points < s
+|	|	|on ajoute j à T[i]
+|	|Fin pour
+|Fin pour
+|retourner T
+
+proc construction tableau
+|entrée: graphe
+|T<-tableau ordonné de 1 à nombre de point
+|Pour i allant de 1 à nombre de point:
+|	|Si T[i]=i:
+|	|	|Tant qu'il y a des voisins de i non traités:
+|	|	|	|T[voisins]<- i
+|	|	|	|Traiter le voisin
+|	|	|Fin tant que
+|	|Fin si 
+|Fin pour
+|Retoruner T
+
+T est un tableau, le nombre de composante connexe est le nombre de nombre différent dans le tableau T
+
+
+
+1 - 2 - 3
+
+T[1,2,3]
+-> T[1,1,3]
+-> T[1,1,1]
+
+1-2 3-4
+T[1,2,3,4]
+-> T[1,1,3,4]
+-> T[1,1,3,3]
+
+|proc création dico
+|entrée: une liste T
+|D-> dictionnaire vide
+|Pour i allant de 1 à nombre de point
+|	|Si T[i] est pas dans D:
+|	|	|ajouter i au dico à la valeur 1
+|	|S T[i] est dans le dico:
+|	|	|On ajoute 1 à la valeur d'adresse T[i]
+|	|Fin si 
+|Fin Pour
+|retourner dico
+
+Ensuite, on créé ensuite une liste en partant du dictionnaire:
+
+|proc rendu_liste
+|entrée: un dictionnaire
+|L-> un vecteur d'entier de taille le nombre de clé du dictionnaire
+|compteur->1
+|pour valeur in dico:
+|	|L[compteur]<-valeur
+|Fin Pour
+|retourner L
+
+On peut alors trier la suite selon une complexité nlog(n) (tri fusion par exemple)
+
+|entrée ː un tableau T
+|sortie ː une permutation triée de T
+|fonction triFusion(T[1, …, n])
+|     si n ≤ 1
+              renvoyer T
+      sinon
+              renvoyer fusion(triFusion(T[1, …, n/2]), triFusion(T[n/2 + 1, …, n]))
+
+entrée ː deux tableaux triés A et B
+sortie : un tableau trié qui contient exactement les éléments des tableaux A et B
+fonction fusion(A[1, …, a], B[1, …, b])
+      si A est le tableau vide
+              renvoyer B
+      si B est le tableau vide
+              renvoyer A
+      si A[1] ≤ B[1]
+              renvoyer A[1] ⊕ fusion(A[2, …, a], B)
+      sinon
+              renvoyer B[1] ⊕ fusion(A, B[2, …, b])
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

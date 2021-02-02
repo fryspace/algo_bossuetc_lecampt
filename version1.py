@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Première version de la résolution du problème d'algo, les entrées du programme sont
 s la disctance minimale entre deux voisins et la liste des points et leurs coordonnées
@@ -35,8 +36,35 @@ def construction_graphe(distance, points):
                 voisins.append(j)
         liste_voisins.append(voisins)
 
+def traitement_sommet(graphe, tableau, valeur, sommet):
+    """
+    Fonction récursive permettant de traiter récursivement les sommets d'un graphe suivant la
+    méthode de notre algorithme
+    """
+    for elem in graphe[sommet]:
+        if tableau[elem]!=valeur:
+            tableau[elem]=valeur
+            traitement_sommet(graphe,tableau, valeur, elem)
+    return tableau
+
+
+
 def construction_tableau_classe(graphe):
-    
+    """
+    On construit le tableau des classes à partir de notre graphe et on le renvoie
+    """
+    tableau=[sommet for sommet in range(len(graphe))]
+    for sommet in range(len(graphe) -1):
+        if tableau[sommet] == sommet:
+            tableau = traitement_sommet(graphe, tableau, sommet, sommet)
+    return tableau
+
+
+def print_components_sizes(distance, points):
+    """
+    affichage des tailles triees de chaque composante
+    """
+    #TODO
 
 
 

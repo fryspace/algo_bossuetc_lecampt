@@ -35,6 +35,7 @@ def construction_graphe(distance, points):
             if Point.distance_to(points[i], points[j]) < distance:
                 voisins.append(j)
         liste_voisins.append(voisins)
+    return liste_voisins
 
 def traitement_sommet(graphe, tableau, valeur, sommet):
     """
@@ -54,7 +55,7 @@ def construction_tableau_classe(graphe):
     On construit le tableau des classes à partir de notre graphe et on le renvoie
     """
     tableau=[sommet for sommet in range(len(graphe))]
-    for sommet in range(len(graphe) -1):
+    for sommet in range(len(graphe)):
         if tableau[sommet] == sommet:
             tableau = traitement_sommet(graphe, tableau, sommet, sommet)
     return tableau
@@ -67,7 +68,7 @@ def construction_dico(tableau):
     dictionnaire={}
     for counter, value in enumerate(tableau):
         if counter == value:
-            dictionnaire[value]=value
+            dictionnaire[value]= 1
         else:
             dictionnaire[value]=dictionnaire[value] + 1
     return dictionnaire
@@ -89,10 +90,10 @@ def sort(tableau1,tableau2):
         return tableau2
     if len(tableau2)==0:
         return tableau1
-    if tableau1[0]<tableau2[0]:
-        return [[tableau1[0]] + sort(tableau1[1:],tableau2)]
+    if tableau1[0]>tableau2[0]:
+        return [tableau1[0]] + sort(tableau1[1:],tableau2)
     else:
-        return [[tableau2[0]] + sort(tableau1,tableau2[1:])]
+        return [tableau2[0]] + sort(tableau1,tableau2[1:])
 
 
 def mergesort(tableau):
@@ -115,8 +116,9 @@ def print_components_sizes(distance, points):
     """
     affichage des tailles triees de chaque composante
     """
-    tableau= construction_liste(construction_tableau_classe(construction_graphe(distance, points)))
-    return mergesort(tableau)
+    graphe=construction_graphe(distance, points)
+    tableau = construction_liste(construction_dico(construction_tableau_classe(graphe)))
+    print(mergesort(tableau))
 
 
 

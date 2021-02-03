@@ -60,11 +60,63 @@ def construction_tableau_classe(graphe):
     return tableau
 
 
+def construction_dico(tableau):
+    """
+    Construction d'un dictionnaire pour agréger les composantes entre elles
+    """
+    dictionnaire={}
+    for counter, value in enumerate(tableau):
+        if counter == value:
+            dictionnaire[value]=value
+        else:
+            dictionnaire[value]=dictionnaire[value] + 1
+    return dictionnaire
+
+def construction_liste(dictionnaire):
+    """
+    A partir du dictionnaire, on peut créer une liste avec les tailles des composantes connexes
+    """
+    liste=[]
+    for clé in dictionnaire:
+        liste.append(dictionnaire[clé])
+    return liste
+
+def sort(tableau1,tableau2):
+    """
+    Permet de faire la fusion de deux tableaux pour le tri fusion
+    """
+    if len(tableau1)==0:
+        return tableau2
+    if len(tableau2)==0:
+        return tableau1
+    if tableau1[0]<tableau2[0]:
+        return [[tableau1[0]] + sort(tableau1[1:],tableau2)]
+    else:
+        return [[tableau2[0]] + sort(tableau1,tableau2[1:])]
+
+
+def mergesort(tableau):
+    """
+    Réalise un tri fusion sur un tableau
+    """
+    if len(tableau) == 1:
+        return tableau
+    else:
+        center = len(tableau) // 2
+        left   = mergesort(tableau[:center])
+        right  = mergesort(tableau[center:])
+        return sort(left,right)
+
+
+
+
+
 def print_components_sizes(distance, points):
     """
     affichage des tailles triees de chaque composante
     """
-    #TODO
+    tableau= construction_liste(construction_tableau_classe(construction_graphe(distance, points)))
+    return mergesort(tableau)
 
 
 

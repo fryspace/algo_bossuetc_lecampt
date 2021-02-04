@@ -39,28 +39,7 @@ def construction_graphe(distance, points):
         liste_voisins.append(voisins)
     return liste_voisins
 
-def traitement_sommet(graphe, tableau, valeur, sommet):
-    """
-    Fonction récursive permettant de traiter récursivement les sommets d'un graphe suivant la
-    méthode de notre algorithme
-    """
-    for elem in graphe[sommet]:
-        if tableau[elem]!=valeur:
-            tableau[elem]=valeur
-            traitement_sommet(graphe,tableau, valeur, elem)
-    return tableau
 
-
-
-def construction_tableau_classe(graphe):
-    """
-    On construit le tableau des classes à partir de notre graphe et on le renvoie
-    """
-    tableau=[sommet for sommet in range(len(graphe))]
-    for sommet in range(len(graphe)):
-        if tableau[sommet] == sommet:
-            tableau = traitement_sommet(graphe, tableau, sommet, sommet)
-    return tableau
 
 def construction_tableau_classe_iter(graphe):
     """

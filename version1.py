@@ -43,9 +43,11 @@ def traitement_sommet(graphe, tableau, valeur, sommet):
     méthode de notre algorithme
     """
     for elem in graphe[sommet]:
-        if tableau[elem]!=valeur:
+        if tableau[elem] > valeur:
             tableau[elem]=valeur
             traitement_sommet(graphe,tableau, valeur, elem)
+        else:
+            tableau[valeur]=tableau[elem]
     return tableau
 
 

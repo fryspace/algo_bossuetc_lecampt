@@ -69,8 +69,10 @@ def construction_tableau_classe_iter(graphe):
             stack=[sommet]
             while len(stack)!= 0:
                 sommet_traité=stack.pop()
-                if tableau[sommet_traité]!=sommet:
+                if tableau[sommet_traité] > sommet:
                     tableau[sommet_traité] = sommet
+                else:
+                    tableau[sommet]=tableau[sommet_traité]
                 stack += graphe[sommet_traité]
     return tableau
 
@@ -134,8 +136,6 @@ def print_components_sizes(distance, points):
     affichage des tailles triees de chaque composante
     """
     graphe=construction_graphe(distance, points)
-    print(graphe)
-    print(construction_tableau_classe_iter(graphe))
     tableau = construction_liste(construction_dico(construction_tableau_classe_iter(graphe)))
     print(iterativemergesort(tableau))
 

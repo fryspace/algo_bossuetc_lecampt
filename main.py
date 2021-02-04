@@ -10,6 +10,7 @@ from sys import argv
 from geo.point import Point
 
 
+
 def load_instance(filename):
     """
     loads .pts file.
@@ -61,6 +62,22 @@ def construction_tableau_classe(graphe):
             tableau = traitement_sommet(graphe, tableau, sommet, sommet)
     return tableau
 
+def construction_tableau_classe_iter(graphe):
+    """
+    construit le tableau des classes de manière itératives
+    """
+    tableau=[sommet for sommet in range(len(graphe))]
+    for sommet in tableau:
+        if tableau[sommet] == sommet:
+            stack=[sommet]
+            while len(stack)!= 0:
+                sommet_traité=stack.pop()
+                if tableau[sommet_traité] > sommet:
+                    tableau[sommet_traité] = sommet
+                else:
+                    tableau[sommet]=tableau[sommet_traité]
+                stack += graphe[sommet_traité]
+    return tableau
 
 def construction_dico(tableau):
     """
@@ -97,17 +114,21 @@ def sort(tableau1,tableau2):
         return [tableau2[0]] + sort(tableau1,tableau2[1:])
 
 
-def mergesort(tableau):
+def iterativemergesort(tableau):
     """
-    Réalise un tri fusion sur un tableau
+    permet de faire un tri_fusion itératif
     """
-    if len(tableau) == 1:
-        return tableau
-    else:
-        center = len(tableau) // 2
-        left   = mergesort(tableau[:center])
-        right  = mergesort(tableau[center:])
-        return sort(left,right)
+    intervals = [(j,j+1) for j in range(len(tableau))]
+    while len(intervals)>1:
+        i=0
+        while i<len(intervals)-1:
+            intervalle1=intervals[i]
+            intervalle2=intervals[i+1]
+            tableau[intervalle1[0]:intervalle2[1]]=sort(tableau[intervalle1[0]:intervalle1[1]],
+            tableau[intervalle2[0]:intervalle2[1]])
+            intervals[i:i+2]=[(intervalle1[0],intervalle2[1])]
+            i+=1
+    return tableau
 
 
 
@@ -118,8 +139,8 @@ def print_components_sizes(distance, points):
     affichage des tailles triees de chaque composante
     """
     graphe=construction_graphe(distance, points)
-    tableau = construction_liste(construction_dico(construction_tableau_classe(graphe)))
-    print(mergesort(tableau))
+    tableau = construction_liste(construction_dico(construction_tableau_classe_iter(graphe)))
+    print(iterativemergesort(tableau))
 
 
 

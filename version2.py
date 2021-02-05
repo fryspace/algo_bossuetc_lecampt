@@ -4,7 +4,7 @@ Même raisonnement que la première version mais de manière itérative
 """
 #from timeit import timeit
 from sys import argv
-
+from time import time
 from geo.point import Point
 
 
@@ -36,28 +36,6 @@ def construction_graphe(distance, points):
         liste_voisins.append(voisins)
     return liste_voisins
 
-def traitement_sommet(graphe, tableau, valeur, sommet):
-    """
-    Fonction récursive permettant de traiter récursivement les sommets d'un graphe suivant la
-    méthode de notre algorithme
-    """
-    for elem in graphe[sommet]:
-        if tableau[elem]!=valeur:
-            tableau[elem]=valeur
-            traitement_sommet(graphe,tableau, valeur, elem)
-    return tableau
-
-
-
-def construction_tableau_classe(graphe):
-    """
-    On construit le tableau des classes à partir de notre graphe et on le renvoie
-    """
-    tableau=[sommet for sommet in range(len(graphe))]
-    for sommet in range(len(graphe)):
-        if tableau[sommet] == sommet:
-            tableau = traitement_sommet(graphe, tableau, sommet, sommet)
-    return tableau
 
 def construction_tableau_classe_iter(graphe):
     """
@@ -76,59 +54,19 @@ def construction_tableau_classe_iter(graphe):
                 stack += graphe[sommet_traité]
     return tableau
 
-def construction_dico(tableau):
-    """
-    Construction d'un dictionnaire pour agréger les composantes entre elles
-    """
-    dictionnaire={}
-    for counter, value in enumerate(tableau):
-        if counter == value:
-            dictionnaire[value]= 1
-        else:
-            dictionnaire[value]=dictionnaire[value] + 1
-    return dictionnaire
 
-def construction_liste(dictionnaire):
-    """
-    A partir du dictionnaire, on peut créer une liste avec les tailles des composantes connexes
-    """
-    liste=[]
-    for clé in dictionnaire:
-        liste.append(dictionnaire[clé])
-    return liste
+def construction_tableaubis(tableau):
+    tab_class=[0 for i in range(len(tableau))]
+    for elem in tableau:
+        tab_class[elem]+=1
+    return tab_class
 
-def sort(tableau1,tableau2):
-    """
-    Permet de faire la fusion de deux tableaux pour le tri fusion
-    """
-    if len(tableau1)==0:
-        return tableau2
-    if len(tableau2)==0:
-        return tableau1
-    if tableau1[0]>tableau2[0]:
-        return [tableau1[0]] + sort(tableau1[1:],tableau2)
-    else:
-        return [tableau2[0]] + sort(tableau1,tableau2[1:])
-
-
-def iterativemergesort(tableau):
-    """
-    permet de faire un tri_fusion itératif
-    """
-    intervals = [(j,j+1) for j in range(len(tableau))]
-    while len(intervals)>1:
-        i=0
-        while i<len(intervals)-1:
-            intervalle1=intervals[i]
-            intervalle2=intervals[i+1]
-            tableau[intervalle1[0]:intervalle2[1]]=sort(tableau[intervalle1[0]:intervalle1[1]],
-            tableau[intervalle2[0]:intervalle2[1]])
-            intervals[i:i+2]=[(intervalle1[0],intervalle2[1])]
-            i+=1
-    return tableau
-
-
-
+def construction_composante(tableau):
+    tab_composante=[]
+    for taille in tableau:
+        if taille != 0:
+            tab_composante.append(taille)
+    return tab_composante
 
 
 def print_components_sizes(distance, points):
@@ -136,8 +74,9 @@ def print_components_sizes(distance, points):
     affichage des tailles triees de chaque composante
     """
     graphe=construction_graphe(distance, points)
-    tableau = construction_liste(construction_dico(construction_tableau_classe_iter(graphe)))
-    print(iterativemergesort(tableau))
+    classe=construction_tableau_classe_iter(graphe)
+    tableau = construction_composante(construction_tableaubis(classe))
+    print(sorted(tableau, reverse=True))
 
 
 

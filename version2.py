@@ -89,4 +89,7 @@ def main():
         print_components_sizes(distance, points)
 
 
+t0=time()
 main()
+t1=time()
+print(t1-t0)

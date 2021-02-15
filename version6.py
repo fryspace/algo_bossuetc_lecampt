@@ -81,7 +81,7 @@ def procédure_formation(points, distance):
                 for i in range(1,int(n/2 +1),2):
                     L[i],L[int(n/2)+i-1]=L[int(n/2)+i-1], None
                 for i in range(int(n/2),n):
-                    L.pop=None
+                    L[i]=None
             n= int(n/2)
     liste_composante=[]
     for elem in L[0]:

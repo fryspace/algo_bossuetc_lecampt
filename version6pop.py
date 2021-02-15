@@ -45,15 +45,15 @@ def fusion_partition(partition1, partition2, distance):
         elif len(L)==1:
             partition1[L[0]] += composante2
         else:
-            partition1[L[0]] += composante2
             for i in range(1, len(L)):
                 partition1[L[0]] += partition1[L[i]]
-                partition1[L[i]]=None 
-            for i in range(len(partition1) -1, 0, 1):
+                partition1[L[i]]=None
+            n=len(partition1)
+            for i in range(n-1, 1, -1):
                 if partition1[i] is None:
-                    partition1[i] = partition1[-1]
+                    partition1[i], partition1[-1] = partition1[-1], partition1[i]
                     partition1.pop()
-        print(partition1)
+            
 
 def procédure_formation(points, distance):
     L=[]
@@ -70,22 +70,13 @@ def procédure_formation(points, distance):
             L.pop()
             n=1
         else:
-            for i in range(0,n,2):
-                fusion_partition(L[i], L[i+1], distance)
-            if (n/2)%2==1:
-                for i in range(1, int(len(L)/2),2):
-                    L[i],L[int(n/2)+i]=L[int(n/2)+i], None
-                for i in range(int(n/2),n):
-                    L.pop()
-            else:
-                for i in range(1,int(n/2 +1),2):
-                    L[i],L[int(n/2)+i-1]=L[int(n/2)+i-1], None
-                for i in range(int(n/2),n):
-                    L.pop()
+            for i in range(0,int(n/2),1):
+                fusion_partition(L[i], L[int(n/2+i)], distance)
+            del L[int(n/2):1]
             n= int(n/2)
+            print(L)
     liste_composante=[]
     for elem in L[0]:
-        if elem is not None:
             liste_composante.append(len(elem))
     return liste_composante
         

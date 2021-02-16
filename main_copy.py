@@ -23,11 +23,32 @@ def load_instance(filename):
     return distance, points
 
 
+def graphe(distance, points):
+    convexe=[[points[0]]]
+    for i in range (1, len(points)):
+        boucle=True
+        bcl=True
+        j=0
+        while j <len(convexe) and boucle:
+            k=0
+            while k < len(convexe[j])  and bcl:
+                if Point.distance_to(points[i], convexe[j][k])<=distance:
+                    convexe[j].append(points[i])
+                    bcl,boucle=False, False
+                k+=1
+            j+=1
+        if boucle:
+            convexe.append([points[i]])
+    return convexe
+
+
+
 def print_components_sizes(distance, points):
     """
     affichage des tailles triees de chaque composante
     """
-    pass  # TODO: afficher la solution
+    graph=graphe(distance,points)
+    print(sorted([len(g) for g in graph], reverse=True))
 
 
 def main():

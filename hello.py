@@ -28,8 +28,7 @@ et/ou segments (ou juste un point/segment)")
     cercle = [Point([cos(c*pi/10), sin(c*pi/10)]) for c in range(20)]
     # un iterateur sur des segments (crees a la volee)
     segments = (
-        Segment([p1, p2])
-        for p1, p2 in zip(cercle, islice(cycle(cercle), 1, None))
+        Segment([p1, p2]) for p1, p2 in zip(cercle, islice(cycle(cercle), 1, None))
         )
     tycat(origine, cercle, segments)
 

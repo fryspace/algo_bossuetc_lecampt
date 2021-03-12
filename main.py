@@ -55,11 +55,6 @@ def print_components_sizes(distance, points):
     """
     affichage des tailles triees de chaque composante
     """
-<<<<<<< HEAD
-    graphe=construction_graphe(distance, points)
-    classe=construction_tableau_classe_iter(graphe)
-    print(sorted(classe,reverse=True))
-=======
     graph=graphe(distance,points)
     L=[]
     for g in graph:
@@ -67,7 +62,6 @@ def print_components_sizes(distance, points):
             L.append(len(g))
     print(sorted(L, reverse=True))
 
->>>>>>> b70caa1c1365cc519de1c8437d1b6486ee5d3321
 
 def main():
     """

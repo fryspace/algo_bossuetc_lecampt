@@ -6,7 +6,6 @@ sort and display.
 
 from time import time
 from sys import argv
-
 from geo.point import Point
 
 
@@ -21,15 +20,6 @@ def load_instance(filename):
         points = [Point([float(f) for f in l.split(",")]) for l in lines]
 
     return distance, points
-
-
-def recherche(A,B):
-    """ cherche un element commun
-    """
-    for a in A:
-        for m in range (0,len(B)):
-            if a==B[m]: return m
-    return -1
 
 
 def graphe(distance, points):
@@ -59,7 +49,6 @@ def graphe(distance, points):
         if boucle:
             convexe.append([points[i]])
     return convexe
-
 
 
 def print_components_sizes(distance, points):

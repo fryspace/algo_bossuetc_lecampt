@@ -7,7 +7,6 @@ from sys import argv
 from time import time
 from geo.point import Point
 
-
 def load_instance(filename):
     """
     loads .pts file.
@@ -19,6 +18,7 @@ def load_instance(filename):
         points = [Point([float(f) for f in l.split(",")]) for l in lines]
 
     return distance, points
+
 
 def construction_graphe(distance, points):
     """
@@ -34,34 +34,11 @@ def construction_graphe(distance, points):
                 liste_voisins[j].append(i)
     return liste_voisins
 
-def construction_tableau_classe_iter(liste_voisin):
-    """
-    DFS simple sur la liste de voisins
-    """
-    liste=[]
-    tableau_marque=[False for i in range(len(liste_voisin))]
-    for i in range(len(liste_voisin)):
-        if not tableau_marque[i]:
-            stack=[i]
-            compteur=0
-            while stack!=[]:
-                sommet_traité=stack.pop()
-                if not tableau_marque[sommet_traité]:
-                    tableau_marque[sommet_traité]= True
-                    compteur+=1
-                    stack+= liste_voisin[sommet_traité]
-            liste.append(compteur)
-    return liste
-
-
-
 def print_components_sizes(distance, points):
     """
     affichage des tailles triees de chaque composante
     """
-    graphe=construction_graphe(distance, points)
-    classe=construction_tableau_classe_iter(graphe)
-    print(sorted(classe,reverse=True))
+    construction_graphe(distance, points)
 
 def main():
     """
@@ -71,5 +48,6 @@ def main():
         distance, points = load_instance(instance)
         print_components_sizes(distance, points)
 
-
+t0=time()
 main()
+print(time()-t0)

@@ -4,7 +4,7 @@ compute sizes of all connected components.
 sort and display.
 """
 
-from timeit import timeit
+#from timeit import timeit
 from sys import argv
 
 from geo.point import Point
@@ -24,10 +24,8 @@ def load_instance(filename):
 
 
 def maillage(distance):
-    départ = Point([0,0])
-    opposée = Point([distance, distance])
-    maille = départ.distance_to(opposée)
-    return maille
+    return distance/1.4142135623730951
+
 
 def construction_matrice(maille, points):
     nb = int(1/maille) + 1
@@ -48,14 +46,13 @@ def est_connexe(case1, case2, distance):
 
 
 def trouver_borne( i, j, nb):
-    min = None
     i_max = i + 2
     j_min = j - 2
-    j_max = j + 2 
+    j_max = j + 2
     if i_max > nb - 2:
         i_max = i
-    elif i_max > nb - 1: 
-        i_max = i + 1 
+    elif i_max > nb - 1:
+        i_max = i + 1
     if j_min < -1:
         j_min= j
     elif j_min < 0:
@@ -65,12 +62,6 @@ def trouver_borne( i, j, nb):
     elif j_max > nb-1:
         j_max = j+1
     return i_max, j_min, j_max
-
-    
-    
-    
-        
-            
 
 
 def construit_table_équivalence(matrice_point, maille, distance):

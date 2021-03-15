@@ -49,6 +49,11 @@ def trouver_borne( i, j, nb):
     i_max = i + 2
     j_min = j - 2
     j_max = j + 2
+    i_min=i-2
+    if i_min < -1:
+        i_min=0
+    elif i_min < 0:
+        i_min = i-1
     if i_max > nb - 2:
         i_max = i
     elif i_max > nb - 1:
@@ -61,7 +66,7 @@ def trouver_borne( i, j, nb):
         j_max = j
     elif j_max > nb-1:
         j_max = j+1
-    return i_max, j_min, j_max
+    return i_min, i_max, j_min, j_max
 
 
 def construit_table_équivalence(matrice_point, maille, distance):
@@ -72,22 +77,35 @@ def construit_table_équivalence(matrice_point, maille, distance):
     for i in range(nb):
         for j in range(nb):
             if matrice_point[i][j] != []:
-                i_max, j_min, j_max = trouver_borne(i, j, nb)
+                i_min, i_max, j_min, j_max = trouver_borne(i, j, nb)
                 attente={}
-                for k in range(i, i_max + 1):
+                for k in range(i_min, i_max + 1):
                     for l in range(j_min, j_max + 1):
                         if matrice_point[k][l] != []:
                             if est_connexe(matrice_point[i][j], matrice_point[k][l], distance):
                                 attente[(k,l)]= tableau_équiv[k][l]
                 classe = nouveau
                 for clé, values in attente.items():
-                    if values is not None  and values < nouveau :
+                    if values is not None:
                         classe=min(classe, values)
                 tableau_équiv[i][j]=classe
                 for clé , values in attente.items():
                     tableau_équiv[clé[0]][clé[1]]= classe
                 if classe == nouveau:
                     nouveau+=1
+    for i in range(nb-1, -1, -1):
+        for j in range(nb-1, -1, -1):
+            i_min, i_max, j_min, j_max = trouver_borne(i, j, nb)
+            attente={}
+            for k in range(i_min, i_max + 1):
+                for l in range(j_min, j_max + 1):
+                    if tableau_équiv[k][l] is not None and est_connexe(matrice_point[i][j], matrice_point[k][l], distance):
+                        attente[(k,l)]=tableau_équiv[k][l]
+            classe = tableau_équiv[i][j]
+            for clé, values in attente.items():
+                classe=min(classe, values)
+            for clé , values in attente.items():
+                tableau_équiv[clé[0]][clé[1]]= classe
     for i in range(nb):
         for j in range(nb):
             if tableau_équiv[i][j] is None:

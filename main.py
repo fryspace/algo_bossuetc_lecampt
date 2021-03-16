@@ -60,7 +60,6 @@ def trouver_borne( i, j, nb):
         i_max = i + 1
     if j_min < -1:
         j_min= j
-    elif j_min < 0:
         j_min= j-1
     if j_max > nb-2:
         j_max = j

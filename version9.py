@@ -4,7 +4,7 @@ compute sizes of all connected components.
 sort and display.
 """
 
-from timeit import timeit
+from time import time
 from sys import argv
 
 from geo.point import Point
@@ -124,7 +124,7 @@ def print_components_sizes(distance, points):
     maille = maillage(distance)
     matrice_point= construction_matrice(maille, points)
     print(sorted(construit_table_équivalence(matrice_point, maille, distance), reverse=True))
-
+    
 
 
 def main():
@@ -135,5 +135,6 @@ def main():
         distance, points = load_instance(instance)
         print_components_sizes(distance, points)
 
-
+t0=time()
 main()
+print(time()-t0)

@@ -4,7 +4,7 @@ compute sizes of all connected components.
 sort and display.
 """
 
-from timeit import timeit
+from time import time
 from sys import argv
 
 from geo.point import Point
@@ -54,7 +54,7 @@ def print_components_sizes(distance, points):
     """
     composantes = {}
     for point in points:
-        print(composantes)
+        composantes
         l=[]
         for clé, value in composantes.items():
             if est_dans_carré(point, clé):
@@ -94,4 +94,7 @@ def main():
         print_components_sizes(distance, points)
 
 
+t0=time()
 main()
+t1=time()
+print(t1-t0)

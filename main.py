@@ -24,10 +24,17 @@ def load_instance(filename):
 
 
 def maillage(distance):
+    """
+    permet de definir le maillage
+    """
     return distance/1.4142135623730951
 
 
 def construction_matrice(maille, points):
+    """
+    permet de definir la grille en fonction de la maille. 
+    ajoute a chaque case les points qui lui appartiennent
+    """
     nb = int(1/maille) + 1
     matrice_point = [[[]for _ in range(nb)] for _ in range(nb)]
     for point in points:
@@ -38,6 +45,9 @@ def construction_matrice(maille, points):
     return matrice_point
 
 def est_connexe(case1, case2, distance):
+    """
+    permet de verifier si 2 cases sont connexes en parcourant les points dans les 2 cases
+    """
     for point1 in case1:
         for point2 in case2:
             if point1.distance_to(point2) <= distance:
@@ -46,6 +56,10 @@ def est_connexe(case1, case2, distance):
 
 
 def trouver_borne( i, j, nb):
+    """
+    donne les bornes inferieurs et supperieurs des cases potentiellement connexes pour une case donnee en 
+    fonction du nombre de cases dans la grille
+    """
     i_max = i + 2
     j_min = j - 2
     j_max = j + 2
@@ -70,6 +84,9 @@ def trouver_borne( i, j, nb):
 
 
 def construit_table_équivalence(matrice_point, maille, distance):
+    """
+    construit la liste des tailles des composantes connexes
+    """
     nb = int(1/maille) + 1
     tableau_équiv = [ [None for _ in range(nb)] for _ in range(nb)]
     nouveau = 0

@@ -12,4 +12,4 @@ def generateur(nb, distance):
         print(x, ", ", y, sep="")
     return None
 
-generateur(10000, 0.01)
+generateur(100000, 0.001)

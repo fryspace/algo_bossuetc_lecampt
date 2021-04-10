@@ -91,10 +91,10 @@ def main():
     """
     for instance in argv[1:]:
         distance, points = load_instance(instance)
+        t0=time()
         print_components_sizes(distance, points)
+        print(time()-t0)
 
 
-t0=time()
 main()
-t1=time()
-print(t1-t0)
+

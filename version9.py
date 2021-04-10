@@ -123,7 +123,7 @@ def print_components_sizes(distance, points):
     """
     maille = maillage(distance)
     matrice_point= construction_matrice(maille, points)
-    print(sorted(construit_table_équivalence(matrice_point, maille, distance), reverse=True))
+    sorted(construit_table_équivalence(matrice_point, maille, distance), reverse=True)
     
 
 
@@ -133,8 +133,8 @@ def main():
     """
     for instance in argv[1:]:
         distance, points = load_instance(instance)
+        t0=time()
         print_components_sizes(distance, points)
+        print(time()-t0)
 
-t0=time()
 main()
-print(time()-t0)
